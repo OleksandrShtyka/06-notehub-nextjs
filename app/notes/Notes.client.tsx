@@ -11,8 +11,6 @@ import Pagination from '@/components/Pagination/Pagination';
 import Modal from '@/components/Modal/Modal';
 import NoteForm from '@/components/NoteForm/NoteForm';
 import NoteList from '@/components/NoteList/NoteList';
-import Loader from '@/app/loading';
-import ErrorMessage from '@/app/error';
 
 interface Props {
   initialPage: number;
@@ -86,8 +84,10 @@ export default function NoteClient({ initialPage }: Props) {
           </button>
         </header>
 
-        {isLoading && <Loader />}
-        {isError && error && <ErrorMessage error={error} />}
+        {isLoading && <p>Loading, please wait...</p>}
+        {isError && error && (
+          <p>Could not fetch the list of notes. {error.message}</p>
+        )}
 
         {!isLoading && !isError && notes.length > 0 && (
           <NoteList notes={notes} />
